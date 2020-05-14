@@ -76,7 +76,7 @@ class CommandSystem(QDialog, Ui_CommandSystemDialog):
         pickle_file = f'{ROOTDIR}/ParameterFiles/{quickParam[idx]}'
         try:
             with open(pickle_file, 'rb') as pickle_obj:
-                _, paramNames, _, _, _, _ = pickle.load(pickle_obj)
+                paramNames = pickle.load(pickle_obj)[1]
             return len(paramNames) > 0
         except IOError:
             return False

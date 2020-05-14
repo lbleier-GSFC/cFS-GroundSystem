@@ -103,12 +103,6 @@ def getFileList(filename='CHeaderParser-hdr-paths.txt'):
                 l = l.strip()
                 if l and not l.startswith("#"):
                     paths.append(l)
-                # Don't worry about comment lines
-                # if line.find('#') == -1:
-                # Don't worry about empty lines
-                # if line != '':
-                # Add line to list of paths
-                # paths.append(line)
             print(f"Using header files found in {filename}")
             # Send paths back to caller function
             return paths
@@ -149,8 +143,6 @@ if __name__ == '__main__':
             for single_line in single_hdr:
                 master_hdr.append(single_line)
 
-    #print "Master Header Length: " + str(len(master_hdr))
-
     # Reads and saves command and parameter information
     # Look through each line of the header file for command definitions
     for single_line in master_hdr:
@@ -180,9 +172,6 @@ if __name__ == '__main__':
                 # structure
                 single_line = single_line[:single_line.rfind('//')]
 
-            #else:
-            #	print "Did not find any comments in definition."
-
             # Split single line into list for indexing
             definition = single_line.split()
 
@@ -195,30 +184,15 @@ if __name__ == '__main__':
                 cmdDesc.append(definition[1])
                 cmdCodes.append(definition[2])
 
-            #else:
-            #	print "length not 3, see line below"
-            #	print definition
-
-    #print ("List of Command Descriptions Below:")
-    #print (cmdDesc)
-    #print ("--------------------------------------------------------------")
-    #print ("List of Command Codes Below:")
-    #print (cmdCodes)
-    #print ("--------------------------------------------------------------")
-
-    print(
-        "We need to save the command into to a pickle file in 'CommandFile/'. "
-    )
-    print(
-        "Please do not use any spaces/quotes in your filename. Ex: my_app_cmd_file"
-    )
+    print(("We need to save the command into to a pickle file "
+           "in 'CommandFile/'.\nPlease do not use any spaces/quotes "
+           "in your filename. Ex: my_app_cmd_file"))
     cmd_file_name = input(
         "What would you like the command file to be saved as? ")
 
     # starting from last index (-1) going backward
     # (from example above) file_split[-2] = app_msg
     # therefore picklefile = CommandFiles/app_msg
-    #pickle_file = 'CommandFiles/'+file_split[-2]
     pickle_file = f'{ROOTDIR}/CommandFiles/{cmd_file_name}'
 
     # Open pickle file for storing command codes/descriptions
@@ -456,14 +430,8 @@ if __name__ == '__main__':
 
                     print("Array size:", array_size)
 
-                    # Set flag initially to false in order to get into while loop
-                    # array_size_within_limit = False
-
-                    # Check conditions before loop to see if loop is even necessary
-                    # array_size_within_limit = array_size.isdigit() and int(
-                    #     array_size) in range(129)
-
-                    # This while loop will make sure that the user input is both
+                    # This while loop will make sure that
+                    # the user input is both
                     # - a valid integer
                     # - between 0 and 128 (inclusively)
                     while not array_size.isdigit() or int(

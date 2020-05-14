@@ -38,7 +38,6 @@ ROOTDIR = Path(sys.argv[0]).resolve().parent
 # CFS Ground System: Setup and manage the main window
 #
 class GroundSystem(QMainWindow, Ui_MainWindow):
-
     #
     # Init the class
     #
@@ -76,7 +75,6 @@ class GroundSystem(QMainWindow, Ui_MainWindow):
     #
     def DisplayErrorMessage(self, message):
         print(message)
-        # alert = QMessageBox()
         self.alert.setText(message)
         self.alert.setIcon(QMessageBox.Warning)
         self.alert.exec_()
@@ -104,14 +102,18 @@ class GroundSystem(QMainWindow, Ui_MainWindow):
             ['python3', f'{ROOTDIR}/Subsystems/cmdGui/CommandSystem.py'])
 
     # Start FDL-FUL gui system
-    #def startFDLSystem(self):
-    #    selectedSpacecraft = self.getSelectedSpacecraftName()
-    #    if selectedSpacecraft == 'All':
-    #        subscription = ''
-    #        self.DisplayErrorMessage('Cannot open FDL manager.\nNo spacecraft selected.')
-    #    else:
-    #       subscription = '--sub=GroundSystem.' + selectedSpacecraft
-    #       os.system('( cd Subsystems/fdlGui/ && python FdlSystem.py ' + subscription + ' ) & ')
+    def startFDLSystem(self):
+        selectedSpacecraft = self.getSelectedSpacecraftName()
+        if selectedSpacecraft == 'All':
+            subscription = ''
+            self.DisplayErrorMessage(
+                'Cannot open FDL manager.\nNo spacecraft selected.')
+        else:
+            subscription = f'--sub=GroundSystem.{selectedSpacecraft}'
+            subprocess.Popen([
+                'python3', f'{ROOTDIR}/Subsystems/fdlGui/FdlSystem.py',
+                subscription
+            ])
 
     # Update the combo box list in gui
     def updateIpList(self, ip, name):

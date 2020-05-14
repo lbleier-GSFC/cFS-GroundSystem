@@ -120,8 +120,6 @@ class RoutingService(QThread):
     def getPktId(datagram):
         # Read the telemetry header
         streamId = unpack(">H", datagram[:2])
-        # Uncomment the next line to debug
-        # print("Packet ID =", hex(streamId))
         return hex(streamId[0])
 
     # Close ZMQ vars

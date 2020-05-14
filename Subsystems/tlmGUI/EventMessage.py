@@ -205,10 +205,6 @@ if __name__ == '__main__':
     if not subscription or len(subscription.split('.')) < 3:
         subscription = "GroundSystem"
 
-    # arr = subscription.split('.')
-    # if len(arr) < 3:
-    #     subscription = 'GroundSystem'
-
     print('Event Messages Page started. Subscribed to', subscription)
 
     py_endian = '<' if endian == 'L' else '>'

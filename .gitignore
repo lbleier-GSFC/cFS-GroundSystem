@@ -1,5 +1,3 @@
 *.pyc
 cmdUtil
 .DS_Store
-Subsystems/cmdGui/CHeaderParser.py
-Subsystems/cmdGui/CHeaderParser.py

@@ -22,7 +22,6 @@
 import csv
 import getopt
 import shlex
-# import socket
 import subprocess
 import sys
 from pathlib import Path
@@ -38,7 +37,6 @@ ROOTDIR = Path(sys.argv[0]).resolve().parent
 
 
 class TelemetrySystem(QDialog, Ui_TelemetrySystemDialog):
-
     #
     # Init the class
     #
@@ -70,8 +68,6 @@ class TelemetrySystem(QDialog, Ui_TelemetrySystemDialog):
     # Dump the telemetry packet
     #
     def dumpPacket(self, packetData):
-        # appIdString = f"{ord(packetData[0]):02X}"
-        # appIdString += f"{ord(packetData[1]):02X}"
         appId = (ord(packetData[0]) << 8) + (ord(packetData[1]))
         print("\n-----------------------------------------------")
         print("\nPacket: App ID =", hex(appId))

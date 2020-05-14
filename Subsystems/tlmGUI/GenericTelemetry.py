@@ -36,7 +36,6 @@ ROOTDIR = Path(sys.argv[0]).resolve().parent
 
 
 class SubsystemTelemetry(QDialog, Ui_GenericTelemetryDialog):
-
     #
     # Init the class
     #
@@ -77,7 +76,8 @@ class SubsystemTelemetry(QDialog, Ui_GenericTelemetryDialog):
         self.thread.start()
 
     #
-    # This method processes packets. Called when the TelemetryReceiver receives a message/packet
+    # This method processes packets.
+    # Called when the TelemetryReceiver receives a message/packet
     #
     def processPendingDatagrams(self, datagram):
         #

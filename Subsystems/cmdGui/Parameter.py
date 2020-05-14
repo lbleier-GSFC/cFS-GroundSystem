@@ -34,7 +34,6 @@ ROOTDIR = Path(sys.argv[0]).resolve().parent
 
 
 class Parameter(QDialog, Ui_Dialog):
-
     #
     # Initializes Parameter class
     #
@@ -65,12 +64,10 @@ class Parameter(QDialog, Ui_Dialog):
                 param_list.append(f'{dataType}={input_list[k]}')  # --byte=4
             k += 1
         param_string = ' '.join(param_list)
-        # print(param_string)
         launch_string = (
             f'{ROOTDIR}/../cmdUtil/cmdUtil --host={pageAddress} '
             f'--port={pagePort} --pktid={pagePktId} --endian={pageEndian} '
             f'--cmdcode={cmdCode} {param_string.strip()}')
-        # print launch_string
         cmd_args = shlex.split(launch_string)
         subprocess.Popen(cmd_args)
         self.status_box.setText('Command sent!')
@@ -80,7 +77,6 @@ class Parameter(QDialog, Ui_Dialog):
 # Main method
 #
 if __name__ == '__main__':
-
     #
     # Initializes variables
     #

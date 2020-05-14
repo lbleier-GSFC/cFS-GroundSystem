@@ -47,9 +47,6 @@ ROOTDIR = Path(sys.argv[0]).resolve().parent
 
 
 class SubsystemCommands(QDialog, Ui_GenericCommandDialog):
-
-    # pktCount = 0
-
     #
     # Init the class
     #
@@ -71,7 +68,7 @@ class SubsystemCommands(QDialog, Ui_GenericCommandDialog):
         pf = f'{ROOTDIR}/ParameterFiles/{param_files[idx]}'
         try:
             with open(pf, 'rb') as po:
-                _, paramNames, _, _, _, _ = pickle.load(po)
+                paramNames = pickle.load(po)[1]
             return len(paramNames) > 0  # if has parameters
         except IOError:
             return False
@@ -120,7 +117,6 @@ def usage():
 # Main
 #
 if __name__ == '__main__':
-
     #
     # Set defaults for the arguments
     #
