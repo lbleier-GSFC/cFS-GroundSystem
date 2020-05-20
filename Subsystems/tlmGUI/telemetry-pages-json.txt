@@ -1,0 +1,38 @@
+#
+# telemetry-pages.txt
+#
+# This file should have the following comma delimited fields:
+#   1. Description
+#   2. Python class to handle the telemetry packets
+#   3. Packet ID in hex
+#   4. Telemetry definition file, or null
+#
+#  Note(1): A line that begins with # is a comment
+#  Note(2): Remove any blank lines from the end of the file
+#
+Event Messages,            EventMessage.py,         0x808,   null
+ES HK Tlm,                 GenericTelemetry.py,     0x800,   CFE_ES_HousekeepingTlm.json
+
+EVS HK Tlm,                GenericTelemetry.py,     0x801,   CFE_EVS_HousekeepingTlm.json
+
+SB HK Tlm,                 GenericTelemetry.py,     0x803,   CFE_SB_HousekeepingTlm.json
+
+TBL HK Tlm,                GenericTelemetry.py,     0x804,   CFE_TBL_HousekeepingTlm.json
+
+TIME HK Tlm,               GenericTelemetry.py,     0x805,   CFE_TIME_HousekeepingTlm.json
+
+TIME DIAG Tlm,           GenericTelemetry.py,     0x806,   CFE_TIME_DiagnosticTlm.json
+
+SB STATs Tlm,              GenericTelemetry.py,     0x80A,   CFE_SB_StatsTlm.json
+
+ES APP Tlm,                GenericTelemetry.py,     0x80B,   CFE_ES_OneAppTlm.json
+
+TBL REG Tlm,               GenericTelemetry.py,     0x80C,   CFE_TBL_TableRegistryTlm.json
+
+SB ALLSUBs Tlm,            GenericTelemetry.py,     0x80D,   CFE_SB_AllSubscriptionsTlm.json
+
+SB OneSub Tlm,             GenericTelemetry.py,     0x80E,   CFE_SB_SingleSubscriptionTlm.json
+
+ES Shell Tlm,              GenericTelemetry.py,     0x80F,   CFE_ES_ShellTlm.json
+
+ES MEMSTATS Tlm,           GenericTelemetry.py,     0x810,   CFE_ES_MemStatsTlm.json

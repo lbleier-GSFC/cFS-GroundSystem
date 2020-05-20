@@ -28,7 +28,7 @@ from struct import unpack
 
 import zmq
 from PyQt5.QtCore import QThread, pyqtSignal
-from PyQt5.QtWidgets import QApplication, QDialog
+from PyQt5.QtWidgets import QApplication, QDialog, QTableWidgetItem
 
 from GenericTelemetryDialog import Ui_GenericTelemetryDialog
 
@@ -63,9 +63,7 @@ class SubsystemTelemetry(QDialog, Ui_GenericTelemetryDialog):
                 valueField.setText(tlmItemEnum[tlmIndex][int(TlmField[0])])
             elif tlmItemDisplayType[tlmIndex] == 'Str':
                 valueField.setText(TlmField[0].decode('utf-8', 'ignore'))
-            labelField.setPlainText(tlmItemDesc[tlmIndex])
-        else:
-            labelField.setPlainText("(unused)")
+            labelField.setText(tlmItemDesc[tlmIndex])
 
     # Start the telemetry receiver (see GTTlmReceiver class)
     def initGTTlmReceiver(self, subscr):
@@ -90,10 +88,10 @@ class SubsystemTelemetry(QDialog, Ui_GenericTelemetryDialog):
         #
         # Decode and display all packet elements
         #
-        for k in range(40):
-            itemLabelpte = getattr(self, f"itemLabelPlainTextEdit_{k+1}")
-            itemValuele = getattr(self, f"itemValueLineEdit_{k+1}")
-            self.displayTelemetryItem(datagram, k, itemLabelpte, itemValuele)
+        for k in range(self.tblTelemetry.rowCount()):
+            itemLabel = self.tblTelemetry.item(k, 0)
+            itemValue = self.tblTelemetry.item(k, 1)
+            self.displayTelemetryItem(datagram, k, itemLabel, itemValue)
 
     ## Reimplements closeEvent
     ## to properly quit the thread
@@ -199,34 +197,33 @@ if __name__ == '__main__':
     #
     # Read in the contents of the telemetry packet definition
     #
-    tlmItemIsValid, tlmItemDesc, tlmItemStart, tlmItemSize, tlmItemDisplayType, tlmItemFormat = (
-        [] for _ in range(6))
-    tlmItemEnum = [[]] * 40
+    tlmItemIsValid, tlmItemDesc, \
+    tlmItemStart, tlmItemSize, \
+    tlmItemDisplayType, tlmItemFormat = ([] for _ in range(6))
+
+    tlmItemEnum = [None] * 40
 
     i = 0
     with open(f"{ROOTDIR}/{tlmDefFile}") as tlmfile:
         reader = csv.reader(tlmfile, skipinitialspace=True)
         for row in reader:
-            if row[0][0] != '#':
+            if not row[0].startswith('#'):
                 tlmItemIsValid.append(True)
                 tlmItemDesc.append(row[0])
                 tlmItemStart.append(row[1])
                 tlmItemSize.append(row[2])
-                if row[3] == 's':
-                    tlmItemFormat.append(row[2] + row[3])
+                if row[3].lower() == 's':
+                    tlmItemFormat.append(f'{row[2]}{row[3]}')
                 else:
-                    tlmItemFormat.append(py_endian + row[3])
+                    tlmItemFormat.append(f'{py_endian}{row[3]}')
                 tlmItemDisplayType.append(row[4])
                 if row[4] == 'Enm':
-                    for m in range(5, 9):
-                        tlmItemEnum[i].append(row[m])
+                    tlmItemEnum[i] = row[5:9]
+                Telem.tblTelemetry.insertRow(i)
+                lblItem, valItem = QTableWidgetItem(), QTableWidgetItem()
+                Telem.tblTelemetry.setItem(i, 0, lblItem)
+                Telem.tblTelemetry.setItem(i, 1, valItem)
                 i += 1
-
-    #
-    # Mark the remaining values as invalid
-    #
-    for j in range(i, 40):
-        tlmItemIsValid.append(False)
 
     #
     # Display the page
